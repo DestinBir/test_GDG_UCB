@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-mono: "VT323", monospace;
+  --font-sans: "VT323", monospace; /* Force pixel font everywhere */
+}
+
+@layer utilities {
+  .font-pixel {
+    font-family: 'VT323', monospace;
+  }
+  
+  /* Glitch Text Effect */
+  .glitch {
+    position: relative;
+  }
+  .glitch::before,
+  .glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .glitch::before {
+    left: 2px;
+    text-shadow: -1px 0 #ff00ff;
+    clip: rect(44px, 450px, 56px, 0);
+    animation: glitch-anim 5s infinite linear alternate-reverse;
+  }
+  .glitch::after {
+    left: -2px;
+    text-shadow: -1px 0 #00ffff;
+    clip: rect(44px, 450px, 56px, 0);
+    animation: glitch-anim2 5s infinite linear alternate-reverse;
+  }
+
+  /* Scanline Background */
+  .scanlines {
+    background: linear-gradient(
+      to bottom,
+      rgba(255,255,255,0),
+      rgba(255,255,255,0) 50%,
+      rgba(0,0,0,0.2) 50%,
+      rgba(0,0,0,0.2)
+    );
+    background-size: 100% 4px;
+    animation: scanline-move 10s linear infinite;
+  }
+
+  /* CRT Flicker */
+  .crt-flicker {
+    animation: flicker 0.15s infinite;
+  }
+}
+
+@keyframes glitch-anim {
+  0% { clip: rect(38px, 9999px, 84px, 0); }
+  20% { clip: rect(8px, 9999px, 96px, 0); }
+  40% { clip: rect(68px, 9999px, 2px, 0); }
+  60% { clip: rect(21px, 9999px, 62px, 0); }
+  80% { clip: rect(93px, 9999px, 14px, 0); }
+  100% { clip: rect(5px, 9999px, 37px, 0); }
+}
+
+@keyframes glitch-anim2 {
+  0% { clip: rect(65px, 9999px, 100px, 0); }
+  20% { clip: rect(22px, 9999px, 6px, 0); }
+  40% { clip: rect(89px, 9999px, 44px, 0); }
+  60% { clip: rect(3px, 9999px, 81px, 0); }
+  80% { clip: rect(56px, 9999px, 20px, 0); }
+  100% { clip: rect(12px, 9999px, 76px, 0); }
+}
+
+@keyframes scanline-move {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 100%; }
+}
+
+@keyframes flicker {
+  0% { opacity: 0.97; }
+  50% { opacity: 1; }
+  100% { opacity: 0.98; }
+}
+
+body {
+  background-color: #000000;
+  color: #00ffff;
+  font-family: 'VT323', monospace;
+  overflow-x: hidden;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #111;
+}
+::-webkit-scrollbar-thumb {
+  background: #ff00ff;
+  border: 1px solid #000;
+}
